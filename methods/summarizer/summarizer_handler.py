@@ -11,16 +11,16 @@ import os
 summarizer_handler_router = Router()
 
 @summarizer_handler_router.message(Command("start"))
-async def cmd_start_and_first_name(message: types.Message, state:FSMContext):  
+async def cmd_start_insert_text(message: types.Message, state:FSMContext):  
     await state.set_state(AddSummarizerStates.summarizer)   
     await message.answer(f"Здравствуйте! Введите пожалуйста текст для конспекта!")
-    
 
 @summarizer_handler_router.message(AddSummarizerStates.summarizer)
 async def lets_see(message: types.Message, state:FSMContext): 
     await state.update_data(summarizer=message.text)
+    await message.answer('Подождите, ваш запрос обрабатывается...')
     data = await state.get_data()
     await state.clear()
     summarized_string = summarize_text(data['summarizer'])
     
-    await message.answer(f"Краткое содержание статьи: {summarized_string}")
+    await message.answer(f"Краткое содержание статьи:\n\n{summarized_string}")
