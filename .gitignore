@@ -2,3 +2,5 @@ myenv/
 .env
 config.txt
 *__pycache__
+test.ipynb
+methods/components/pickle_files/model_to_pickle.pkl

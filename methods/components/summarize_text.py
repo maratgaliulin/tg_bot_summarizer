@@ -1,10 +1,13 @@
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import pickle
 
 def summarize_text(document_str:str) -> str:
 
     # Загрузка модели и токенизатора
-    tokenizer = AutoTokenizer.from_pretrained('cointegrated/rut5-base-multitask')
-    model = AutoModelForSeq2SeqLM.from_pretrained('cointegrated/rut5-base-multitask')
+    with open('methods/components/pickle_files/tokenizer_to_pickle.pkl', 'rb') as file:
+        tokenizer = pickle.load(file)
+
+    with open('methods/components/pickle_files/model_to_pickle.pkl', 'rb') as file:
+        model = pickle.load(file)
 
     # Формирование запроса для суммаризации
     input_text = f"summarize: {document_str}"
